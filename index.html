@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CNBU4 Production Value</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="app" class="app">
+  <header class="topbar">
+    <div class="brand"><img id="logo" alt="" hidden><h1 id="title">CNBU4 PRODUCTION VALUE</h1></div>
+    <div class="toolbar">
+      <span id="modeBadge" class="badge" hidden></span>
+      <div class="status" aria-live="polite">
+        <span id="lastUpdated">Last updated: -</span>
+        <span id="loadStatus" class="loadstatus" hidden><i class="spinner"></i><span>Loading…</span></span>
+      </div>
+      <button id="btnRefresh" class="btn" title="Refresh Data">&#x21bb; Refresh Data</button>
+      <button id="btnFull" class="btn" title="Full Screen">&#x26F6; Full Screen</button>
+      <span id="userBox" class="userbox" hidden><span id="userName"></span> <button id="btnSignOut" class="link">Sign out</button></span>
+    </div>
+  </header>
+
+  <div id="errorBox" class="error" role="alert" hidden></div>
+  <div id="warnBox" class="warn" hidden></div>
+
+  <section id="signinPanel" class="signin" hidden>
+    <h2>กรุณา Sign in ด้วยบัญชี Microsoft 365 ของบริษัท</h2>
+    <p>ระบบจะอ่านไฟล์จาก SharePoint ตามสิทธิ์ของคุณเอง</p>
+    <button id="btnSignIn" class="btn primary">Sign in with Microsoft</button>
+  </section>
+
+  <section id="filePanel" class="signin" hidden>
+    <h2>เลือกไฟล์ Excel (Rolling_Estimation)</h2>
+    <p>โหมดเปิดไฟล์โดยตรง (ไม่ต้องติดตั้งโปรแกรม) — ข้อมูลอ่านในเครื่องคุณเท่านั้น ไม่ถูกส่งออกไปที่ใด</p>
+    <button id="btnPick" class="btn primary">เลือกไฟล์ Excel…</button>
+  </section>
+  <input id="fileInput" type="file" accept=".xlsx,.xlsm" hidden>
+
+  <main id="dash" class="dash" hidden>
+    <section class="row kpis">
+      <div class="card kpi"><div id="kpiPv" class="kpi-val blue">-</div><div class="kpi-lbl">Production Value</div></div>
+      <div class="card kpi"><div id="kpiRolling" class="kpi-val">-</div><div class="kpi-lbl">Rolling(MUSD)</div></div>
+      <div class="card kpi"><div id="kpiAch" class="kpi-val">-</div><div class="kpi-lbl">Ach</div></div>
+
+      <div class="card filters">
+        <div class="f-group"><div class="f-lbl">Factory</div><div id="factoryBtns" class="chips"></div></div>
+        <div class="f-group dates">
+          <label class="f-lbl" for="dFrom">Date range</label>
+          <div class="daterow"><input id="dFrom" type="date"><span>–</span><input id="dTo" type="date"></div>
+        </div>
+        <div class="f-group wide"><div class="f-lbl">MRP <button id="btnClear" class="link">Clear</button></div><div id="mrpBtns" class="chips"></div></div>
+      </div>
+    </section>
+
+    <section class="row mid">
+      <div class="card chart cum"><div class="chart-wrap"><canvas id="chartCumulative"></canvas></div></div>
+      <div class="card chart cmp"><div class="chart-wrap"><canvas id="chartComparison"></canvas></div></div>
+      <div class="card chart gap"><div class="ctitle">GAP by MRP</div><div id="gapTotal" class="gaptotal">-</div><div class="chart-wrap"><canvas id="chartGap"></canvas></div></div>
+    </section>
+
+    <section class="row bottom">
+      <div class="card chart daily"><div class="ctitle">PV(Act), DPS_With_PV and DPS_Without_PV by Date</div><div class="chart-wrap"><canvas id="chartDaily"></canvas></div></div>
+    </section>
+    <div class="colorbar"><i></i><i></i><i></i></div>
+  </main>
+</div>
+
+<script src="vendor/chart.umd.js"></script>
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="vendor/msal-browser.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
